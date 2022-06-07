@@ -8,6 +8,14 @@ class UserCreate(BaseModel):
     password: str
 
 
+class ShowUser(BaseModel):
+    email: EmailStr
+    is_active: bool
+
+    class Config:
+        orm_mode = True
+
+
 class Items(BaseModel):
     description: Optional[str]
     title: str
