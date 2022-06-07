@@ -1,11 +1,10 @@
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from config.settings import settings
-from database import engine, get_db
-from models import Base, User
-from schemas import UserCreate
-from sqlalchemy.orm import Session
-from hashing import Hash
+from database import engine
+from models import Base
+from routers.user import router
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,24 +16,12 @@ app = FastAPI(
     openapi_tags=settings.tags,
 )
 
-
-@app.get("/user", tags=["User"])
-def get_user():
-    return {"message": "Hello User"}
+app.include_router(router)
 
 
 @app.get("/product", tags=["Product"])
 def get_product():
     return {"message": "Hello Product"}
-
-
-@app.post("/create_user", tags=["User"])
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    user = User(email=user.email, password=Hash.get_hash_password(user.password))
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
 
 
 if __name__ == "__main__":
