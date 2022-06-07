@@ -1,6 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 from config.settings import settings
+from database import engine
+from models import Base
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.app_title,
