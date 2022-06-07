@@ -4,8 +4,8 @@ from typing import Optional
 
 
 class UserCreate(BaseModel):
-    password: str
     email: EmailStr
+    password: str
 
 
 class Items(BaseModel):
