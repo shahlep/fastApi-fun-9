@@ -30,8 +30,7 @@ def get_product():
 
 @app.post("/create_user", tags=["User"])
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    user = User(email=user.email,
-                password=Hash.get_hash_password(user.password))
+    user = User(email=user.email, password=Hash.get_hash_password(user.password))
     db.add(user)
     db.commit()
     db.refresh(user)
