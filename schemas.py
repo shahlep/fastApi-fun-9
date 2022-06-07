@@ -3,10 +3,9 @@ from pydantic import EmailStr
 from typing import Optional
 
 
-class User(BaseModel):
+class UserCreate(BaseModel):
     password: str
     email: EmailStr
-    is_active: bool
 
 
 class Items(BaseModel):
