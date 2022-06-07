@@ -1,4 +1,4 @@
-from schemas import UserCreate,ShowUser
+from schemas import UserCreate, ShowUser
 from sqlalchemy.orm import Session
 from hashing import Hash
 from fastapi import APIRouter, Depends
@@ -13,7 +13,7 @@ def get_user():
     return {"message": "Hello User"}
 
 
-@router.post("/create_user", tags=["User"],response_model=ShowUser)
+@router.post("/create_user", tags=["User"], response_model=ShowUser)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     user = User(email=user.email, password=Hash.get_hash_password(user.password))
     db.add(user)
