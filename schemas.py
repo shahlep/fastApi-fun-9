@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from pydantic import EmailStr
+from typing import Optional
 
 
 class User(BaseModel):
@@ -9,5 +10,5 @@ class User(BaseModel):
 
 
 class Items(BaseModel):
-    description: str
+    description: Optional[str]
     title: str
