@@ -1,8 +1,9 @@
 from fastapi import APIRouter
+from schemas import ItemCreate
 
 router = APIRouter()
 
 
-@router.get("/product", tags=["Product"])
-def get_product():
-    return {"message": "Hello Product"}
+@router.post("/item", tags=["Items"])
+def create_item(item:ItemCreate):
+    pass

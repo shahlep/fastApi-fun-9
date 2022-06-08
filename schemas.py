@@ -16,6 +16,6 @@ class ShowUser(BaseModel):
         orm_mode = True
 
 
-class Items(BaseModel):
+class ItemCreate(BaseModel):
     description: Optional[str]
     title: str
