@@ -1,5 +1,6 @@
 import json
 
+
 def test_create_user():
     data = {"email": "test2@example.com", "password": "testuser3"}
     response = client.post("/users", json.dumps(data))

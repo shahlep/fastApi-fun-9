@@ -1,5 +1,6 @@
 import json
 
+
 def test_create_item():
     data = {"title": "test title", "description": "test description"}
     response = client.post("/items", json.dumps(data))
