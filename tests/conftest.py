@@ -23,13 +23,12 @@ Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 
-def override_get_db():
-    try:
-        db = Test_Session_Local()
-        yield db
-    finally:
-        db.close()
-
-
-# overrides
-app.dependency_overrides[get_db] = override_get_db
+def client():
+    def override_get_db():
+        try:
+            db = Test_Session_Local()
+            yield db
+        finally:
+            db.close()
+        # overrides
+        app.dependency_overrides[get_db] = override_get_db
