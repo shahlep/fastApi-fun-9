@@ -3,7 +3,7 @@ import os
 import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+import pytest
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -20,6 +20,7 @@ Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 
+@pytest.fixture
 def client():
     def override_get_db():
         try:
@@ -29,5 +30,6 @@ def client():
             db.close()
         # overrides
         app.dependency_overrides[get_db] = override_get_db
+
         client = TestClient(app)
         yield client
