@@ -8,9 +8,6 @@ from sqlalchemy.orm import sessionmaker
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from main import app
-
-client = TestClient(app)
-
 from database import Base, get_db
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -32,3 +29,6 @@ def client():
             db.close()
         # overrides
         app.dependency_overrides[get_db] = override_get_db
+        client = TestClient(app)
+        yield client
+
