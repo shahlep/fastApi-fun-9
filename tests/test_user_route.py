@@ -20,6 +20,7 @@ engine = create_engine(
 )
 Test_Session_Local = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
+Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 
@@ -29,7 +30,7 @@ def override_get_db():
         yield db
     finally:
         db.close()
-        Base.metadata.drop_all(bind=engine)
+
 
 
 # overrides
@@ -37,8 +38,8 @@ app.dependency_overrides[get_db] = override_get_db
 
 
 def test_create_user():
-    data = {"email": "test1@example.com", "password": "testuser2"}
+    data = {"email": "test2@example.com", "password": "testuser3"}
     response = client.post("/users", json.dumps(data))
     assert response.status_code == 200
-    assert response.json()["email"] == "test1@example.com"
+    assert response.json()["email"] == "test2@example.com"
     assert response.json()["is_active"] == True
