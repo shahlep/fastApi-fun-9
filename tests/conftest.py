@@ -28,6 +28,7 @@ def client():
             yield db
         finally:
             db.close()
+
     # overrides
     app.dependency_overrides[get_db] = override_get_db
 
