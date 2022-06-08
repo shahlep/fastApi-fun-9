@@ -19,6 +19,13 @@ Test_Session_Local = sessionmaker(bind=engine, autoflush=False, autocommit=False
 
 Base.metadata.create_all(bind=engine)
 
+def override_get_db():
+    try:
+        db = Test_Session_Local()
+        yield db
+    finally:
+        db.close()
+
 
 def test_create_user():
     data = {"email": "test1@example.com", "password": "testuser2"}
