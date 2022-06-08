@@ -21,7 +21,6 @@ class ItemCreate(BaseModel):
     description: str
 
 
-
 class ShowItem(BaseModel):
     title: str
     description: str
