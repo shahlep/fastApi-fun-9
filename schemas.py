@@ -17,8 +17,9 @@ class ShowUser(BaseModel):
 
 
 class ItemCreate(BaseModel):
-    description: str
     title: str
+    description: str
+
 
 
 class ShowItem(BaseModel):

@@ -8,7 +8,7 @@ from datetime import datetime
 router = APIRouter()
 
 
-@router.post("/item", tags=["Items"], response_model=ShowItem)
+@router.post("/items", tags=["Items"], response_model=ShowItem)
 def create_item(item: ItemCreate, user_id: int, db: Session = Depends(get_db)):
     date_posted = datetime.now().date()
     item = Items(**item.dict(), date_posted=date_posted, owner_id=user_id)
