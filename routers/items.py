@@ -20,5 +20,6 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/items/{id}", tags=["Items"])
-def get_item_by_id(id: int):
-    pass
+def get_item_by_id(id: int,db: Session = Depends(get_db)):
+    item = db.query(Items).filter(Items.id==id).first()
+    return item
