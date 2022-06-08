@@ -10,7 +10,7 @@ class UserCreate(BaseModel):
 
 class ShowUser(BaseModel):
     email: EmailStr
-    is_active: bool
+    is_active: bool = True
 
     class Config:
         orm_mode = True
