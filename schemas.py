@@ -25,3 +25,6 @@ class ShowItem(BaseModel):
     title: str
     description: str
     date_posted: date
+
+    class Config:
+        orm_mode = True
