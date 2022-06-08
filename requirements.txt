@@ -26,3 +26,6 @@ websockets==10.3
 
 passlib[bcrypt]
 pydantic[email]
+
+pytest
+requests

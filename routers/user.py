@@ -8,12 +8,12 @@ from models import User
 router = APIRouter()
 
 
-@router.get("/user", tags=["User"])
+@router.get("/users", tags=["User"])
 def get_user():
     return {"message": "Hello User"}
 
 
-@router.post("/create_user", tags=["User"], response_model=ShowUser)
+@router.post("/users", tags=["User"], response_model=ShowUser)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     user = User(email=user.email, password=Hash.get_hash_password(user.password))
     db.add(user)
