@@ -1,7 +1,7 @@
 import json
 
 
-def test_create_item():
+def test_create_item(client):
     data = {"title": "test title", "description": "test description"}
     response = client.post("/items", json.dumps(data))
     assert response.status_code == 200
