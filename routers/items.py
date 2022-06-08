@@ -9,9 +9,10 @@ router = APIRouter()
 
 
 @router.post("/items", tags=["Items"], response_model=ShowItem)
-def create_item(item: ItemCreate, user_id: int, db: Session = Depends(get_db)):
+def create_item(item: ItemCreate, db: Session = Depends(get_db)):
+    owner_id = 1
     date_posted = datetime.now().date()
-    item = Items(**item.dict(), date_posted=date_posted, owner_id=user_id)
+    item = Items(**item.dict(), date_posted=date_posted, owner_id=owner_id)
     db.add(item)
     db.commit()
     db.refresh(item)
