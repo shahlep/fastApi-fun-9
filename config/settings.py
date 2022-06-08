@@ -14,7 +14,7 @@ class Settings:
 
     tags = [
         {"name": "User", "description": "User Related Routes"},
-        {"name": "Product", "description": "Product Related Routes"},
+        {"name": "Items", "description": "Item Related Routes"},
     ]
     POSTGRESS_USER: str = os.getenv("POSTGRESS_USER")
     POSTGRESS_PASSWORD: str = os.getenv("POSTGRESS_PASSWORD")
