@@ -23,5 +23,6 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
 def get_item_by_id(id: int,db: Session = Depends(get_db)):
     item = db.query(Items).filter(Items.id==id).first()
     if not item:
-        raise HTTPException(status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status.HTTP_404_NOT_FOUND,
+                            detail=f"Given Item id:{id} doesn't exist ")
     return item
