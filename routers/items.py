@@ -19,7 +19,7 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
     return item
 
 
-@router.get("/items/{id}", tags=["Items"])
+@router.get("/items/{id}", tags=["Items"],response_model=ShowItem)
 def get_item_by_id(id: int, db: Session = Depends(get_db)):
     item = db.query(Items).filter(Items.id == id).first()
     if not item:
