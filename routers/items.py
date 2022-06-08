@@ -17,3 +17,8 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(item)
     return item
+
+
+@router.get("/items/{id}", tags=["Items"])
+def get_item_by_id(id: int):
+    pass
