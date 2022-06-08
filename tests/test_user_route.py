@@ -17,6 +17,8 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL,
                        connect_args={"check_same_thread": False})
 Test_Session_Local = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
+Base.metadata.create_all(bind=engine)
+
 
 def test_create_user():
     data = {"email": "test1@example.com", "password": "testuser2"}
