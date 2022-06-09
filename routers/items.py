@@ -4,6 +4,7 @@ from models import Items
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime
+from typing import List
 
 router = APIRouter()
 
@@ -19,7 +20,7 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
     return item
 
 
-@router.get("/items/all", tags=["Items"], response_model=ShowItem)
+@router.get("/items/all", tags=["Items"], response_model=List[ShowItem])
 def get_item_by_id(db: Session = Depends(get_db)):
     item = db.query(Items).all()
     return item
