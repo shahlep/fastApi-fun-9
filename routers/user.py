@@ -4,13 +4,15 @@ from hashing import Hash
 from fastapi import APIRouter, Depends
 from database import get_db
 from models import User
+from typing import List
 
 router = APIRouter()
 
 
-@router.get("/users", tags=["User"])
-def get_user():
-    return {"message": "Hello User"}
+@router.get("/users", tags=["User"],response_model=List[ShowUser])
+def get_all_user(db: Session = Depends(get_db)):
+    user = db.query(User).all()
+    return user
 
 
 @router.post("/users", tags=["User"], response_model=ShowUser)
