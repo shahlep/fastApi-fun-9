@@ -37,5 +37,5 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/items/update/{id}", tags=["Items"])
-def update_item_by_id():
+def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db)):
     pass
