@@ -48,3 +48,13 @@ def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db)):
         )  # or use- existing_item.update(item.__dict__)
         db.commit()
         return {"Message": f"Item information with id {id} has been updated!"}
+
+
+@router.delete("/items/{id}", tags=["Items"])
+def delete_item_by_id(id: int, db: Session = Depends(get_db)):
+    existing_item = db.query(Items).filter(Items.id == id)
+    if not existing_item.first():
+        return {"Message": f"Item with id {id} doesn't exist!"}
+    existing_item.delete()
+    db.commit()
+    return {"Message": f"Item with id {id} successfully deleted!"}
