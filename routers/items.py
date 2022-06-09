@@ -43,6 +43,6 @@ def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db)):
     if not existing_item.first():
         return {"Message": f"Item with id {id} doesn't exist!"}
     else:
-        existing_item.update(jsonable_encoder(item))
+        existing_item.update(jsonable_encoder(item))  # or use- existing_item.update(item.__dict__)
         db.commit()
         return {"Message": f"Item information with id {id} has been updated!"}
