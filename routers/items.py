@@ -34,3 +34,8 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
             status.HTTP_404_NOT_FOUND, detail=f"Given Item {id} doesn't exist "
         )
     return item
+
+
+@router.put("/items/update/{id}", tags=["Items"])
+def update_item_by_id():
+    pass
