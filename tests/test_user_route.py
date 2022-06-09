@@ -7,3 +7,6 @@ def test_create_user(client):
     assert response.status_code == 200
     assert response.json()["email"] == "test2@example.com"
     assert response.json()["is_active"] == True
+
+
+
