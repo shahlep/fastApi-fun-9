@@ -9,7 +9,7 @@ from typing import List
 router = APIRouter()
 
 
-@router.get("/users", tags=["User"],response_model=List[ShowUser])
+@router.get("/users", tags=["User"], response_model=List[ShowUser])
 def get_all_user(db: Session = Depends(get_db)):
     user = db.query(User).all()
     return user
