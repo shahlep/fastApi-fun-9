@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime
 from typing import List
+from fastapi.encoders import jsonable_encoder
 
 router = APIRouter()
 
@@ -38,4 +39,10 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 @router.put("/items/update/{id}", tags=["Items"])
 def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db)):
-    pass
+    existing_item = db.query(Items).filter(Items.id == id)
+    if not existing_item.first():
+        return {"Message": f"Item with id {id} doesn't exist!"}
+    else:
+        existing_item.update(jsonable_encoder(item))
+        db.commit()
+        return {"Message": f"Item information with id {id} has been updated!"}
