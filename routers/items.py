@@ -6,12 +6,13 @@ from database import get_db
 from datetime import datetime
 from typing import List
 from fastapi.encoders import jsonable_encoder
+from login import oauth_scheme
 
 router = APIRouter()
 
 
 @router.post("/items", tags=["Items"], response_model=ShowItem)
-def create_item(item: ItemCreate, db: Session = Depends(get_db)):
+def create_item(item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)):
     owner_id = 1
     date_posted = datetime.now().date()
     item = Items(**item.dict(), date_posted=date_posted, owner_id=owner_id)
@@ -38,7 +39,7 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/items/update/{id}", tags=["Items"])
-def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db)):
+def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db),token:str=Depends(oauth_scheme)):
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
         return {"Message": f"Item with id {id} doesn't exist!"}
@@ -51,7 +52,7 @@ def update_item_by_id(id: int, item: ItemCreate, db: Session = Depends(get_db)):
 
 
 @router.delete("/items/{id}", tags=["Items"])
-def delete_item_by_id(id: int, db: Session = Depends(get_db)):
+def delete_item_by_id(id: int, db: Session = Depends(get_db),token:str=Depends(oauth_scheme)):
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
         return {"Message": f"Item with id {id} doesn't exist!"}
