@@ -17,15 +17,21 @@ router = APIRouter()
 def create_item(
     item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
-    payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
-    username = payload.get("sub")
-    if username is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unable to verify credentials!",
-        )
-    user = db.query(User).filter(User.email == username).first()
-    if user is None:
+    try:
+        payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
+        username = payload.get("sub")
+        if username is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unable to verify credentials!",
+            )
+        user = db.query(User).filter(User.email == username).first()
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unable to verify credentials!",
+            )
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Unable to verify credentials!",
