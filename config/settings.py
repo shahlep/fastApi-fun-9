@@ -28,6 +28,8 @@ class Settings:
 
     TEST_EMAIL = "test1@example.com"
     TEST_PASSWORD = "testuser1"
+    TEST_ITEM_TITLE = "Test Title"
+    TEST_ITEM_DESC = "Test Description"
 
 
 settings = Settings()

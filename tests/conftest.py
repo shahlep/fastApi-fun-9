@@ -4,7 +4,6 @@ import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import pytest
-from config.settings import Settings
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -35,6 +34,9 @@ def client():
 
     client = TestClient(app)
     yield client
+
+
+from config.settings import Settings
 
 
 @pytest.fixture
