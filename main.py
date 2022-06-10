@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from config.settings import settings
 from database import engine
 from models import Base
-from routers import user, items , login
+from routers import user, items, login
 
 
 Base.metadata.create_all(bind=engine)

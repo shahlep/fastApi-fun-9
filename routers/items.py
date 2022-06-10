@@ -6,7 +6,7 @@ from database import get_db
 from datetime import datetime
 from typing import List
 from fastapi.encoders import jsonable_encoder
-from login import oauth_scheme
+from .login import oauth_scheme
 
 router = APIRouter()
 
