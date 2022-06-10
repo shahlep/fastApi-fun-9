@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.post("/login/token", tags=["Login"])
 def get_token_after_authentication(
-    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+        form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
     user = db.query(User).filter(User.email == form_data.username).first()
     if not user:
@@ -27,7 +27,6 @@ def get_token_after_authentication(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Password!"
         )
 
-    data = {"sub":form_data.username}
-    jwt_token = jwt.encode(data,Settings.SECURITY_KEY,algorithm=Settings.ALGORITHM)
-    return {"access_token":jwt_token,"token_type":"bearer"}
-
+    data = {"sub": form_data.username}
+    jwt_token = jwt.encode(data, Settings.SECURITY_KEY, algorithm=Settings.ALGORITHM)
+    return {"access_token": jwt_token, "token_type": "bearer"}
