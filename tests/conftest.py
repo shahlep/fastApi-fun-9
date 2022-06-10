@@ -4,6 +4,7 @@ import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import pytest
+from config.settings import Settings
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -37,9 +38,9 @@ def client():
 
 
 @pytest.fixture
-def token_header():
-    email = "test1@example.com"
-    test_password = "testuser1"
+def token_header(client: TestClient):
+    email = Settings.TEST_EMAIL
+    test_password = Settings.TEST_PASSWORD
     data = {"username": email, "password": test_password}
     response = client.post("/login/token", data=data)
     access_token = response.json()["access_token"]
