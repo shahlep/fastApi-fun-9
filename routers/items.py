@@ -13,10 +13,7 @@ from config.settings import Settings
 router = APIRouter()
 
 
-@router.post("/items", tags=["Items"], response_model=ShowItem)
-def create_item(
-    item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
-):
+def get_user_from_token(token, db):
     try:
         payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
         username = payload.get("sub")
@@ -36,6 +33,14 @@ def create_item(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Unable to verify credentials!",
         )
+    return user
+
+
+@router.post("/items", tags=["Items"], response_model=ShowItem)
+def create_item(
+        item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+):
+    user = get_user_from_token(token, db)
     owner_id = user.id
     date_posted = datetime.now().date()
     item = Items(**item.dict(), date_posted=date_posted, owner_id=owner_id)
@@ -46,7 +51,7 @@ def create_item(
 
 
 @router.get("/items/all", tags=["Items"], response_model=List[ShowItem])
-def get_item_by_id(db: Session = Depends(get_db)):
+def get_all_items(db: Session = Depends(get_db)):
     item = db.query(Items).all()
     return item
 
@@ -63,31 +68,12 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 @router.put("/items/update/{id}", tags=["Items"])
 def update_item_by_id(
-    id: int,
-    item: ItemCreate,
-    db: Session = Depends(get_db),
-    token: str = Depends(oauth_scheme),
+        id: int,
+        item: ItemCreate,
+        db: Session = Depends(get_db),
+        token: str = Depends(oauth_scheme),
 ):
-    try:
-        payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
-        username = payload.get("sub")
-        if username is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Unable to verify credentials!",
-            )
-        user = db.query(User).filter(User.email == username).first()
-        if user is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Unable to verify credentials!",
-            )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unable to verify credentials!",
-        )
-
+    user = get_user_from_token(token,db)
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
         return {"Message": f"Item with id {id} doesn't exist!"}
@@ -103,28 +89,9 @@ def update_item_by_id(
 
 @router.delete("/items/{id}", tags=["Items"])
 def delete_item_by_id(
-    id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+        id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
-    try:
-        payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
-        username = payload.get("sub")
-        if username is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Unable to verify credentials!",
-            )
-        user = db.query(User).filter(User.email == username).first()
-        if user is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Unable to verify credentials!",
-            )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unable to verify credentials!",
-        )
-
+    user = get_user_from_token(token,db)
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
         return {"Message": f"Item with id {id} doesn't exist!"}
