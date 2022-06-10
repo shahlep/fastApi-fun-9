@@ -5,6 +5,7 @@ from database import get_db
 from models import User
 from hashing import Hash
 from jose import jwt
+from config.settings import Settings
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
 
@@ -27,4 +28,5 @@ def get_token_after_authentication(
         )
 
     data = {"sub":form_data.username}
-    jwt_token = jwt.encode(data,SECRET_KEY,algorithm=)
+    jwt_token = jwt.encode(data,Settings.SECURITY_KEY,algorithm=Settings.ALGORITHM)
+
