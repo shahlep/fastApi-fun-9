@@ -34,3 +34,8 @@ def client():
 
     client = TestClient(app)
     yield client
+
+
+@pytest.fixture
+def token_header():
+    pass
