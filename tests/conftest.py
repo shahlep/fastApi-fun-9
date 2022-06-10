@@ -38,4 +38,8 @@ def client():
 
 @pytest.fixture
 def token_header():
-    pass
+    email = "test1@example.com"
+    test_password = "testuser1"
+    data = {"username": email, "password": test_password}
+    response = client.post("/login/token", data=data)
+    return {"Authorization": f"Bearer {access_token}"}
