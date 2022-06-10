@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.post("/items", tags=["Items"], response_model=ShowItem)
 def create_item(
-    item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+        item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
     jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
     owner_id = 1
@@ -45,10 +45,10 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 @router.put("/items/update/{id}", tags=["Items"])
 def update_item_by_id(
-    id: int,
-    item: ItemCreate,
-    db: Session = Depends(get_db),
-    token: str = Depends(oauth_scheme),
+        id: int,
+        item: ItemCreate,
+        db: Session = Depends(get_db),
+        token: str = Depends(oauth_scheme),
 ):
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
@@ -63,7 +63,7 @@ def update_item_by_id(
 
 @router.delete("/items/{id}", tags=["Items"])
 def delete_item_by_id(
-    id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+        id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
