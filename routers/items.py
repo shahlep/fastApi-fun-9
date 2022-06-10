@@ -15,17 +15,21 @@ router = APIRouter()
 
 @router.post("/items", tags=["Items"], response_model=ShowItem)
 def create_item(
-        item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+    item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
     payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
     username = payload.get("sub")
     if username is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Unable to verify credentials!")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unable to verify credentials!",
+        )
     user = db.query(User).filter(User.email == username).first()
     if user is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Unable to verify credentials!")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unable to verify credentials!",
+        )
     owner_id = user.id
     date_posted = datetime.now().date()
     item = Items(**item.dict(), date_posted=date_posted, owner_id=owner_id)
@@ -53,10 +57,10 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 @router.put("/items/update/{id}", tags=["Items"])
 def update_item_by_id(
-        id: int,
-        item: ItemCreate,
-        db: Session = Depends(get_db),
-        token: str = Depends(oauth_scheme),
+    id: int,
+    item: ItemCreate,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth_scheme),
 ):
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
@@ -71,7 +75,7 @@ def update_item_by_id(
 
 @router.delete("/items/{id}", tags=["Items"])
 def delete_item_by_id(
-        id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+    id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
