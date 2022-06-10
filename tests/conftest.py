@@ -37,10 +37,21 @@ def client():
 
 
 from config.settings import Settings
+from models import User
+from hashing import Hash
 
 
 @pytest.fixture
 def token_header(client: TestClient):
+    db = Test_Session_Local()
+    user = db.query(User).filter(User.email == Settings.TEST_EMAIL).first()
+
+    if user is None:
+        user = User(email=Settings.TEST_EMAIL, password=Hash.get_hash_password(Settings.TEST_PASSWORD))
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
     data = {"username": Settings.TEST_EMAIL, "password": Settings.TEST_PASSWORD}
     response = client.post("/login/token", data=data)
     access_token = response.json()["access_token"]
