@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.post("/login/token", tags=["Login"])
 def get_token_after_authentication(
-        form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
     user = db.query(User).filter(User.email == form_data.username).first()
     if not user:

@@ -23,7 +23,8 @@ class Settings:
     POSTGRESS_DB: str = os.getenv("POSTGRESS_DB")
     DATABASE_URL = f"postgresql://{POSTGRESS_USER}:{POSTGRESS_PASSWORD}@{POSTGRESS_SERVER}:{POSTGRESS_PORT}/{POSTGRESS_DB}"
 
-    SECURITY_KEY:str = os.getenv("SECURITY_KEY")
+    SECURITY_KEY: str = os.getenv("SECURITY_KEY")
     ALGORITHM = "HS256"
+
 
 settings = Settings()
