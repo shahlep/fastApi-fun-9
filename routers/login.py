@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import User
 from hashing import Hash
+from jose import jwt
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
 
@@ -24,3 +25,6 @@ def get_token_after_authentication(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Password!"
         )
+
+    data = {"sub":form_data.username}
+    jwt_token = jwt.encode(data,SECRET_KEY,algorithm=)
