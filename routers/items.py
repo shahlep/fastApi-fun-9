@@ -83,9 +83,32 @@ def update_item_by_id(
 def delete_item_by_id(
     id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
+    try:
+        payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
+        username = payload.get("sub")
+        if username is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unable to verify credentials!",
+            )
+        user = db.query(User).filter(User.email == username).first()
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unable to verify credentials!",
+            )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unable to verify credentials!",
+        )
+
     existing_item = db.query(Items).filter(Items.id == id)
     if not existing_item.first():
         return {"Message": f"Item with id {id} doesn't exist!"}
-    existing_item.delete()
-    db.commit()
-    return {"Message": f"Item with id {id} successfully deleted!"}
+    if existing_item.first().owner_id == user.id:
+        existing_item.delete()
+        db.commit()
+        return {"Message": f"Item with id {id} successfully deleted!"}
+    else:
+        return {"Message": f"You are not authorized!"}
