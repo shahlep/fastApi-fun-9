@@ -29,4 +29,5 @@ def get_token_after_authentication(
 
     data = {"sub":form_data.username}
     jwt_token = jwt.encode(data,Settings.SECURITY_KEY,algorithm=Settings.ALGORITHM)
+    return {"access_token":jwt_token,"token_type":"bearer"}
 
