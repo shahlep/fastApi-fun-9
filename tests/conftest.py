@@ -42,4 +42,5 @@ def token_header():
     test_password = "testuser1"
     data = {"username": email, "password": test_password}
     response = client.post("/login/token", data=data)
+    access_token = response.json()["access_token"]
     return {"Authorization": f"Bearer {access_token}"}
