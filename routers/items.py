@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from schemas import ItemCreate, ShowItem
-from models import Items
+from models import Items, User
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime
@@ -22,7 +22,11 @@ def create_item(
     if username is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Unable to verify credentials!")
-    owner_id = 1
+    user = db.query(User).filter(User.email == username).first()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Unable to verify credentials!")
+    owner_id = user.id
     date_posted = datetime.now().date()
     item = Items(**item.dict(), date_posted=date_posted, owner_id=owner_id)
     db.add(item)
