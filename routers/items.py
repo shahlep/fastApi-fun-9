@@ -7,6 +7,8 @@ from datetime import datetime
 from typing import List
 from fastapi.encoders import jsonable_encoder
 from .login import oauth_scheme
+from jose import jwt
+from config.settings import Settings
 
 router = APIRouter()
 
@@ -15,6 +17,7 @@ router = APIRouter()
 def create_item(
     item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
+    jwt.decode(token,Settings.SECURITY_KEY,)
     owner_id = 1
     date_posted = datetime.now().date()
     item = Items(**item.dict(), date_posted=date_posted, owner_id=owner_id)

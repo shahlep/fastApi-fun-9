@@ -7,6 +7,7 @@ from hashing import Hash
 from jose import jwt
 from config.settings import Settings
 
+
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
 
 router = APIRouter()
@@ -28,5 +29,5 @@ def get_token_after_authentication(
         )
 
     data = {"sub": form_data.username}
-    jwt_token = jwt.encode(data, Settings.SECURITY_KEY, algorithm=Settings.ALGORITHM)
+    jwt_token = jwt.encode(data, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM)
     return {"access_token": jwt_token, "token_type": "bearer"}
