@@ -19,4 +19,7 @@ def items_home(request: Request, db: Session = Depends(get_db)):
 
 @router.get("/details/{id}")
 def item_details(request: Request, id: int, db: Session = Depends(get_db)):
-    pass
+    item = db.query(Items).filter(Items.id == id).first()
+    return templates.TemplateResponse(
+        "item_details_page.html", {"request": request, "item": item}
+    )
