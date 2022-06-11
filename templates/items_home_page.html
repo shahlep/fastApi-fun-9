@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome to Items Homepage..</h1>
-    {{ items }}
+    <div class="container">
+        <h1>Welcome to Items Homepage..</h1>
+        {{ items }}
+        {% include 'card.html' %}
+    </div>
 {% endblock %}
