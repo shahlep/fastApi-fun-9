@@ -22,5 +22,5 @@ def item_details(request: Request, id: int, db: Session = Depends(get_db)):
     item = db.query(Items).filter(Items.id == id).first()
     user = db.query(User).filter(User.id == item.owner_id).first()
     return templates.TemplateResponse(
-        "item_details_page.html", {"request": request, "item": item,"user":user}
+        "item_details_page.html", {"request": request, "item": item, "user": user}
     )
