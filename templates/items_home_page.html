@@ -7,10 +7,12 @@
 {% block content %}
     <div class="container">
         <h1>Welcome to Items Homepage..</h1>
-        {% for item in items %}
-            {% with card_item = item %}
-                {% include 'card.html' %}
-            {% endwith %}
-        {% endfor %}
+        <div class="row">
+            {% for item in items %}
+                {% with card_item = item %}
+                    {% include 'card.html' %}
+                {% endwith %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
