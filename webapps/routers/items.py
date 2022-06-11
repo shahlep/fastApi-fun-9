@@ -12,4 +12,6 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/")
 def items_home(request: Request, db: Session = Depends(get_db)):
     items = db.query(Items).all()
-    return templates.TemplateResponse("items_home_page.html", {"request": request, "items":items})
+    return templates.TemplateResponse(
+        "items_home_page.html", {"request": request, "items": items}
+    )
