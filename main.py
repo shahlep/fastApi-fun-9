@@ -18,7 +18,7 @@ app = FastAPI(
     openapi_tags=settings.tags,
 )
 
-app.mount("/static",StaticFiles(directory="static"),name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(user.router)
 app.include_router(items.router)
