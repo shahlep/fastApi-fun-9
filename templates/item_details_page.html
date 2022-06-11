@@ -11,21 +11,20 @@
 
         <tbody>
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row">Title</th>
+                <td>{{ item.title }}</td>
             </tr>
             <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
+                <th scope="row">Description</th>
+                <td>{{ item.description }}</td>
             </tr>
             <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
+                <th scope="row">Date Posted</th>
+                <td >{{ item.date_posted }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Owner</th>
+                <td >{{ item.owner_id }}</td>
             </tr>
         </tbody>
         </table>
