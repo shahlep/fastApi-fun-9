@@ -7,3 +7,5 @@ __pycache__
 htmlcov
 .coveragerc
 test.db
+migrations
+alembic.ini
