@@ -47,7 +47,10 @@ def token_header(client: TestClient):
     user = db.query(User).filter(User.email == Settings.TEST_EMAIL).first()
 
     if user is None:
-        user = User(email=Settings.TEST_EMAIL, password=Hash.get_hash_password(Settings.TEST_PASSWORD))
+        user = User(
+            email=Settings.TEST_EMAIL,
+            password=Hash.get_hash_password(Settings.TEST_PASSWORD),
+        )
         db.add(user)
         db.commit()
         db.refresh(user)
