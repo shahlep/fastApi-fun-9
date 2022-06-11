@@ -1,9 +1,12 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}
     <title>Item Details Page</title>
 {% endblock %}
 
 {% block content %}
-    <p>This is item details page</p>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <p>This is item details page</p>
+    </div>
 {% endblock %}
