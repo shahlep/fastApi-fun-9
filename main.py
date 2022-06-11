@@ -4,6 +4,7 @@ from config.settings import settings
 from database import engine
 from models import Base
 from routers import user, items, login
+from webapps.routers import items as _items
 
 
 Base.metadata.create_all(bind=engine)
@@ -19,6 +20,7 @@ app = FastAPI(
 app.include_router(user.router)
 app.include_router(items.router)
 app.include_router(login.router)
+app.include_router(_items.router)
 
 if __name__ == "__main__":
     uvicorn.run(app)
