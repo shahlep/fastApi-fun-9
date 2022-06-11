@@ -1,5 +1,9 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
+from database import get_db
+from hashing import Hash
+from models import User
 
 router = APIRouter()
 
@@ -12,5 +16,12 @@ def user_registration(request: Request):
 
 
 @router.post("/register")
-def register(request: Request):
-    pass
+async def register(request: Request, db: Session = Depends(get_db)):
+    form = await request.form()
+    email = form.get("email")
+    password = form.get("password")
+    user = User(email=email,password=Hash.get_hash_password(password))
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
