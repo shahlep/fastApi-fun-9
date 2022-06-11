@@ -9,9 +9,11 @@
         <h1>Welcome to Items Homepage..</h1>
         <div class="row">
             {% for item in items %}
-                {% with card_item = item %}
-                    {% include 'card.html' %}
-                {% endwith %}
+                <div class="col">
+                    {% with card_item = item %}
+                        {% include 'card.html' %}
+                    {% endwith %}
+                </div>
             {% endfor %}
         </div>
     </div>
