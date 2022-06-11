@@ -6,7 +6,7 @@ from models import Base
 from routers import user, items, login
 from webapps.routers import items as _items
 
-# Uisng Alembic migrations
+# Using Alembic migrations
 # Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
