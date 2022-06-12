@@ -23,6 +23,11 @@ async def register(request: Request, db: Session = Depends(get_db)):
     password = form.get("password")
     errors = []
     user = User(email=email, password=Hash.get_hash_password(password))
+    if len(password) <6:
+        errors.append("Password should be at least 6 characters!")
+        return templates.TemplateResponse(
+            "user_registration.html", {"request": request}, {"errors": errors}
+        )
     try:
         db.add(user)
         db.commit()
