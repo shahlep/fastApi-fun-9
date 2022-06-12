@@ -41,7 +41,7 @@ async def login(request: Request, response: Response, db: Session = Depends(get_
                 "login.html", {"request": request, "errors": errors}
             )
         else:
-            if Hash.verify_password(password, User.password):
+            if Hash.verify_password(password, user.password):
                 data = {"sub": email}
                 jwt_token = jwt.encode(
                     data, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM
@@ -50,8 +50,8 @@ async def login(request: Request, response: Response, db: Session = Depends(get_
                     key="access_token", value=f"Bearer {jwt_token}", httponly=True
                 )
                 msg = "Login Successful!"
-                return responses.RedirectResponse(
-                    f"login.html?msg={msg}", status_code=status.HTTP_302_FOUND
+                return templates.TemplateResponse(
+                    "login.html", {"request": request, "errors": errors,"msg":msg}
                 )
             else:
                 errors.append("Invalid password!")
