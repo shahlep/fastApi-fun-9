@@ -23,12 +23,12 @@ async def register(request: Request, db: Session = Depends(get_db)):
     password = form.get("password")
     errors = []
     user = User(email=email, password=Hash.get_hash_password(password))
-    check_email = db.query(User).filter(User.email == user.email).first()
-    if not check_email:
+    if len(password) < 6:
+        errors.append("Password should be at least 6 characters!")
+    try:
         db.add(user)
         db.commit()
         db.refresh(user)
-        return user
-    else:
+    except IntegrityError:
         errors.append("Email already exists")
         return templates.TemplateResponse("user_registration.html", {"request": request, "errors": errors})
