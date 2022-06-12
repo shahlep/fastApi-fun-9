@@ -29,7 +29,7 @@ async def register(request: Request, db: Session = Depends(get_db)):
         db.add(user)
         db.commit()
         db.refresh(user)
-        responses.RedirectResponse("/",status_code=status.HTTP_302_FOUND)
+        responses.RedirectResponse("/?msg=Successfully Registered!",status_code=status.HTTP_302_FOUND)
     except IntegrityError:
         errors.append("Email already exists")
         return templates.TemplateResponse("user_registration.html", {"request": request, "errors": errors})
