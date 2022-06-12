@@ -35,17 +35,19 @@ async def login(request: Request, db: Session = Depends(get_db)):
             "login.html", {"request": request, "errors": errors}
         )
     try:
-        user = db.query(User).filter(User.email==email).first()
+        user = db.query(User).filter(User.email == email).first()
         if user is None:
             errors.append("Email doesn't exist!")
             return templates.TemplateResponse(
                 "login.html", {"request": request, "errors": errors}
             )
         else:
-            if Hash.verify_password(password,User.password):
-                data = {"sub":email}
-                jwt_token = jwt.encode(data,Settings.SECRET_KEY,algorithm=Settings.ALGORITHM)
-                Response.set_cookie(key="access_token",value=f"Bearer {jwt_token}")
+            if Hash.verify_password(password, User.password):
+                data = {"sub": email}
+                jwt_token = jwt.encode(
+                    data, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM
+                )
+                Response.set_cookie(key="access_token", value=f"Bearer {jwt_token}")
             else:
                 errors.append("Invalid password!")
                 return templates.TemplateResponse(
@@ -56,6 +58,3 @@ async def login(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse(
             "login.html", {"request": request, "errors": errors}
         )
-
-
-
