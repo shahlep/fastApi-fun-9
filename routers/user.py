@@ -28,7 +28,13 @@ def get_user_by_id(id: int, db: Session = Depends(get_db)):
 @router.post("/users", tags=["User"], response_model=ShowUser)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     user = User(email=user.email, password=Hash.get_hash_password(user.password))
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
+    check_email = db.query(User).filter(User.email == user.email).first()
+    if not check_email:
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
+    else:
+        raise HTTPException(
+            status.HTTP_302_FOUND, detail=f"Email already exist "
+        )
