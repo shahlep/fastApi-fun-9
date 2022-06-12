@@ -30,7 +30,10 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     user = User(email=user.email, password=Hash.get_hash_password(user.password))
     check_email = db.query(User).filter(User.email == user.email).first()
     if len(User.password) < 6:
-        raise HTTPException(status.HTTP_406_NOT_ACCEPTABLE,detail="Password should be at least 6 characters!")
+        raise HTTPException(
+            status.HTTP_406_NOT_ACCEPTABLE,
+            detail="Password should be at least 6 characters!",
+        )
     if not check_email:
         db.add(user)
         db.commit()
