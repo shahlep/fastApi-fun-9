@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, responses,status
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from database import get_db
@@ -29,6 +29,7 @@ async def register(request: Request, db: Session = Depends(get_db)):
         db.add(user)
         db.commit()
         db.refresh(user)
+        responses.RedirectResponse("/",status_code=status.HTTP_302_FOUND)
     except IntegrityError:
         errors.append("Email already exists")
         return templates.TemplateResponse("user_registration.html", {"request": request, "errors": errors})
