@@ -21,8 +21,11 @@ async def login(request: Request, db: Session = Depends(get_db)):
     errors = []
     if not email:
         errors.append("Please enter valid email!")
-        return templates.TemplateResponse("login.html", {"request": request, "errors": errors})
+        return templates.TemplateResponse(
+            "login.html", {"request": request, "errors": errors}
+        )
     if len(password) > 6:
         errors.append("Password should be at least 6 characters!")
-        return templates.TemplateResponse("login.html", {"request": request, "errors": errors})
-
+        return templates.TemplateResponse(
+            "login.html", {"request": request, "errors": errors}
+        )
