@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Request, Depends, responses,status
-from fastapi.responses import Response
+from fastapi import APIRouter, Request, Depends, responses, status, Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from database import get_db
@@ -19,7 +18,7 @@ def login(request: Request, msg: str = None):
 
 
 @router.post("/login")
-async def login(request: Request, db: Session = Depends(get_db)):
+async def login(request: Request, response: Response, db: Session = Depends(get_db)):
     form = await request.form()
     email = form.get("email")
     password = form.get("password")
@@ -47,7 +46,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
                 jwt_token = jwt.encode(
                     data, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM
                 )
-                Response.set_cookie(
+                response.set_cookie(
                     key="access_token", value=f"Bearer {jwt_token}", httponly=True
                 )
                 msg = "Login Successful!"
