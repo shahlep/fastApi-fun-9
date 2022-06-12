@@ -14,8 +14,8 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/login")
-def login(request: Request,msg: str = None):
-    return templates.TemplateResponse("login.html", {"request": request,"msg":msg})
+def login(request: Request, msg: str = None):
+    return templates.TemplateResponse("login.html", {"request": request, "msg": msg})
 
 
 @router.post("/login")
@@ -52,7 +52,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
                 )
                 msg = "Login Successful!"
                 return templates.TemplateResponse(
-                    "login.html", {"request": request, "errors": errors,"msg":msg}
+                    "login.html", {"request": request, "errors": errors, "msg": msg}
                 )
             else:
                 errors.append("Invalid password!")
