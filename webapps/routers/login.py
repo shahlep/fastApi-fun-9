@@ -2,6 +2,8 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from database import get_db
+from models import User
+from hashing import Hash
 
 router = APIRouter(include_in_schema=False)
 
@@ -29,3 +31,20 @@ async def login(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse(
             "login.html", {"request": request, "errors": errors}
         )
+    try:
+        user = db.query(User).filter(User.email==email).first()
+        if user is None:
+            errors.append("Email doesn't exist!")
+            return templates.TemplateResponse(
+                "login.html", {"request": request, "errors": errors}
+            )
+        else:
+            if Hash.verify_password(password,User.password):
+                pass
+            else:
+                errors.append("Invalid password!")
+                return templates.TemplateResponse(
+                    "login.html", {"request": request, "errors": errors}
+                )
+
+
