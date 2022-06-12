@@ -20,8 +20,7 @@ async def register(request: Request, db: Session = Depends(get_db)):
     form = await request.form()
     email = form.get("email")
     password = form.get("password")
-    user = User(email=email,password=Hash.get_hash_password(password))
+    user = User(email=email, password=Hash.get_hash_password(password))
     db.add(user)
     db.commit()
     db.refresh(user)
-
