@@ -28,7 +28,7 @@ async def login(request: Request, response: Response, db: Session = Depends(get_
         return templates.TemplateResponse(
             "login.html", {"request": request, "errors": errors}
         )
-    if len(password) > 6:
+    if not password or len(password) < 6:
         errors.append("Password should be at least 6 characters!")
         return templates.TemplateResponse(
             "login.html", {"request": request, "errors": errors}
@@ -58,7 +58,7 @@ async def login(request: Request, response: Response, db: Session = Depends(get_
                 return templates.TemplateResponse(
                     "login.html", {"request": request, "errors": errors}
                 )
-    except Exception:
+    except:
         errors.append("something went wrong!")
         return templates.TemplateResponse(
             "login.html", {"request": request, "errors": errors}
