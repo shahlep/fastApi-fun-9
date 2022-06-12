@@ -23,12 +23,12 @@ async def register(request: Request, db: Session = Depends(get_db)):
     password = form.get("password")
     errors = []
     user = User(email=email, password=Hash.get_hash_password(password))
-    try:
+    check_email = db.query(User).filter(User.email == user.email).first()
+    if not check_email:
         db.add(user)
         db.commit()
         db.refresh(user)
-    except IntegrityError:
-        errors.append("Email already exists!")
-        return templates.TemplateResponse(
-            "user_registration.html", {"request": request}, {"errors": errors}
-        )
+        return user
+    else:
+        errors.append("Email already exists")
+        return templates.TemplateResponse("user_registration.html", {"request": request, "errors": errors})
