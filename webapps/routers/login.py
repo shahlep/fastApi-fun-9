@@ -46,5 +46,11 @@ async def login(request: Request, db: Session = Depends(get_db)):
                 return templates.TemplateResponse(
                     "login.html", {"request": request, "errors": errors}
                 )
+    except Exception:
+        errors.append("something went wrong!")
+        return templates.TemplateResponse(
+            "login.html", {"request": request, "errors": errors}
+        )
+
 
 
