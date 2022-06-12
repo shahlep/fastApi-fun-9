@@ -45,7 +45,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
             if Hash.verify_password(password,User.password):
                 data = {"sub":email}
                 jwt_token = jwt.encode(data,Settings.SECRET_KEY,algorithm=Settings.ALGORITHM)
-                Response.set_cookie()
+                Response.set_cookie(key="access_token",value=f"Bearer {jwt_token}")
             else:
                 errors.append("Invalid password!")
                 return templates.TemplateResponse(
