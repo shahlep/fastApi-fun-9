@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, Depends
+from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from database import get_db
@@ -44,7 +45,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
             if Hash.verify_password(password,User.password):
                 data = {"sub":email}
                 jwt_token = jwt.encode(data,Settings.SECRET_KEY,algorithm=Settings.ALGORITHM)
-
+                Response.set_cookie()
             else:
                 errors.append("Invalid password!")
                 return templates.TemplateResponse(
