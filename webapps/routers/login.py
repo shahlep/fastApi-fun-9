@@ -52,7 +52,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
                 )
                 msg = "Login Successful!"
                 return responses.RedirectResponse(
-                    f"/?msg={msg}", status_code=status.HTTP_302_FOUND
+                    f"login.html?msg={msg}", status_code=status.HTTP_302_FOUND
                 )
             else:
                 errors.append("Invalid password!")
