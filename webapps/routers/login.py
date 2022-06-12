@@ -46,13 +46,15 @@ async def login(request: Request, response: Response, db: Session = Depends(get_
                 jwt_token = jwt.encode(
                     data, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM
                 )
+                msg = "Login Successful!"
+                response = templates.TemplateResponse(
+                    "login.html", {"request": request, "errors": errors, "msg": msg}
+                )
                 response.set_cookie(
                     key="access_token", value=f"Bearer {jwt_token}", httponly=True
                 )
-                msg = "Login Successful!"
-                return templates.TemplateResponse(
-                    "login.html", {"request": request, "errors": errors,"msg":msg}
-                )
+
+                return response
             else:
                 errors.append("Invalid password!")
                 return templates.TemplateResponse(
