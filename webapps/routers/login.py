@@ -14,8 +14,8 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/login")
-def login(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+def login(request: Request,msg: str = None):
+    return templates.TemplateResponse("login.html", {"request": request,"msg":msg})
 
 
 @router.post("/login")
