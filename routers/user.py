@@ -35,6 +35,4 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         db.refresh(user)
         return user
     else:
-        raise HTTPException(
-            status.HTTP_302_FOUND, detail=f"Email already exist "
-        )
+        raise HTTPException(status.HTTP_302_FOUND, detail=f"Email already exist ")
