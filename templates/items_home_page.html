@@ -8,7 +8,9 @@
     <div class="container">
         <h1>Welcome to Items Homepage..</h1>
         {% if msg %}
-            {{ msg }}
+            <div class="alert alert-success" role="alert">
+                {{ msg }}
+            </div>
         {% endif %}
         <div class="row">
             {% for item in items %}
