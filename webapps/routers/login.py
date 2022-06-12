@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import User
 from hashing import Hash
+from jose import jwt
+from config.settings import Settings
 
 router = APIRouter(include_in_schema=False)
 
@@ -40,7 +42,9 @@ async def login(request: Request, db: Session = Depends(get_db)):
             )
         else:
             if Hash.verify_password(password,User.password):
-                pass
+                data = {"sub":email}
+                jwt_token = jwt.encode(data,Settings.SECRET_KEY,algorithm=Settings.ALGORITHM)
+
             else:
                 errors.append("Invalid password!")
                 return templates.TemplateResponse(
