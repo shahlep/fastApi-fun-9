@@ -28,6 +28,4 @@ def item_details(request: Request, id: int, db: Session = Depends(get_db)):
 
 @router.get("/create-an-item")
 def create_item(request: Request):
-    return templates.TemplateResponse(
-        "create_item_page.html", {"request": request}
-    )
+    return templates.TemplateResponse("create_item_page.html", {"request": request})
