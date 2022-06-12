@@ -29,6 +29,6 @@ async def register(request: Request, db: Session = Depends(get_db)):
         db.refresh(user)
     except IntegrityError:
         errors.append("Email already exists!")
-        return templates.TemplateResponse("user_registration.html", {"request": request},{"errors":errors})
-
-
+        return templates.TemplateResponse(
+            "user_registration.html", {"request": request}, {"errors": errors}
+        )
