@@ -22,16 +22,18 @@ async def register(request: Request, db: Session = Depends(get_db)):
     email = form.get("email")
     password = form.get("password")
     errors = []
-    user = User(email=email, password=Hash.get_hash_password(password))
     if len(password) < 6:
         errors.append("Password should be at least 6 characters!")
+        return templates.TemplateResponse(
+            "user_registration.html", {"request": request, "errors": errors}
+        )
+    user = User(email=email, password=Hash.get_hash_password(password))
     try:
         db.add(user)
         db.commit()
         db.refresh(user)
-        responses.RedirectResponse(
-            "/?msg=Successfully Registered!", status_code=status.HTTP_302_FOUND
-        )
+        return responses.RedirectResponse("/?msg=Successfully Registered",
+                                          status_code=status.HTTP_302_FOUND)
     except IntegrityError:
         errors.append("Email already exists")
         return templates.TemplateResponse(
