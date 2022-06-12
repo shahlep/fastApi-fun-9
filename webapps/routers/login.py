@@ -50,6 +50,10 @@ async def login(request: Request, db: Session = Depends(get_db)):
                 Response.set_cookie(
                     key="access_token", value=f"Bearer {jwt_token}", httponly=True
                 )
+                msg = "Login Successful!"
+                return templates.TemplateResponse(
+                    "login.html", {"request": request, "errors": errors,"msg":msg}
+                )
             else:
                 errors.append("Invalid password!")
                 return templates.TemplateResponse(
