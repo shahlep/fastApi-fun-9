@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
+from database import get_db
 
 router = APIRouter(include_in_schema=False)
 
@@ -12,5 +14,5 @@ def login(request: Request):
 
 
 @router.post("/login")
-def login():
+def login(request: Request, db: Session = Depends(get_db)):
     pass
