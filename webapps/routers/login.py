@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, responses,status
 from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -51,8 +51,8 @@ async def login(request: Request, db: Session = Depends(get_db)):
                     key="access_token", value=f"Bearer {jwt_token}", httponly=True
                 )
                 msg = "Login Successful!"
-                return templates.TemplateResponse(
-                    "login.html", {"request": request, "errors": errors, "msg": msg}
+                return responses.RedirectResponse(
+                    f"/?msg={msg}", status_code=status.HTTP_302_FOUND
                 )
             else:
                 errors.append("Invalid password!")
