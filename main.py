@@ -6,6 +6,7 @@ from models import Base
 from routers import user, items, login
 from webapps.routers import items as _items
 from webapps.routers import users as _users
+from webapps.routers import login as _login
 from fastapi.staticfiles import StaticFiles
 
 # Using Alembic migrations
@@ -26,6 +27,7 @@ app.include_router(items.router)
 app.include_router(login.router)
 app.include_router(_items.router)
 app.include_router(_users.router)
+app.include_router(_login.router)
 
 if __name__ == "__main__":
     uvicorn.run(app)
