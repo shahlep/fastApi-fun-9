@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from hashing import Hash
 from models import User
+from sqlalchemy.exc import IntegrityError
 
 router = APIRouter()
 
@@ -20,7 +21,12 @@ async def register(request: Request, db: Session = Depends(get_db)):
     form = await request.form()
     email = form.get("email")
     password = form.get("password")
+    errors = []
     user = User(email=email, password=Hash.get_hash_password(password))
-    db.add(user)
-    db.commit()
-    db.refresh(user)
+    try:
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+    except IntegrityError:
+        errors.append("Email already exists!")
+
