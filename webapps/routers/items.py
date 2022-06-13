@@ -41,3 +41,5 @@ async def create_item(request:Request):
         errors.append("Title should have at least 2 characters!")
     if not description or len(description) < 10:
         errors.append("Description should have at least 10 characters!")
+    if len(errors) > 0:
+        return templates.TemplateResponse("create_item_page.html", {"request": request,"errors":errors})
