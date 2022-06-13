@@ -35,7 +35,7 @@ def create_item(request: Request):
 
 
 @router.post("/create-an-item")
-async def create_item(request: Request):
+async def create_item(request: Request,db:Session=Depends(get_db)):
     form = await request.form()
     title = form.get("title")
     description = form.get("description")
@@ -60,7 +60,15 @@ async def create_item(request: Request):
             payload = jwt.decode(
                 param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
             )
-            print(payload)
+            email = payload.get("sub")
+            user = db.query(User).filter(User.email==email).first()
+            if user is None:
+                errors.append("You are not authenticated.Please login with valid credentials or Create Account.")
+                return templates.TemplateResponse(
+                    "create_item_page.html", {"request": request, "errors": errors}
+                )
+            else:
+                pass
     except Exception:
         errors.append("Something went wrong!")
         return templates.TemplateResponse(
