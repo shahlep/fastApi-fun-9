@@ -37,7 +37,8 @@ def items_home(request: Request, db: Session = Depends(get_db), msg: str = None)
     except Exception:
         errors.append("Something went wrong")
         return templates.TemplateResponse(
-            "items_home_page.html", {"request": request, "items": items, "errors": errors}
+            "items_home_page.html",
+            {"request": request, "items": items, "errors": errors},
         )
 
 
