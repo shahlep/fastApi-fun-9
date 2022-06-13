@@ -33,4 +33,6 @@ def create_item(request: Request):
 
 @router.post("/create-an-item")
 async def create_item(request:Request):
-    pass
+    form = await request.form()
+    title = form.get("title")
+    description = form.get("description")
