@@ -54,4 +54,3 @@ async def create_item(request: Request):
             )
     except Exception as e:
         print(e)
-
