@@ -4,6 +4,7 @@ from models import Items, User
 from sqlalchemy.orm import Session
 from database import get_db
 from jose import jwt
+from config.settings import Settings
 
 router = APIRouter(include_in_schema=False)
 
@@ -55,7 +56,8 @@ async def create_item(request: Request):
             )
         else:
             scheme,_, param = token.partition(" ")
-            payload = jwt.decode(param)
+            payload = jwt.decode(param,Settings.SECRET_KEY,algorithms=Settings.ALGORITHM)
+
 
     except Exception as e:
         print(e)
