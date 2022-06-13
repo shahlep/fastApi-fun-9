@@ -55,9 +55,10 @@ async def create_item(request: Request):
                 "create_item_page.html", {"request": request, "errors": errors}
             )
         else:
-            scheme,_, param = token.partition(" ")
-            payload = jwt.decode(param,Settings.SECRET_KEY,algorithms=Settings.ALGORITHM)
-
+            scheme, _, param = token.partition(" ")
+            payload = jwt.decode(
+                param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
+            )
 
     except Exception as e:
         print(e)
