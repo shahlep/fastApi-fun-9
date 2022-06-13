@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 from models import Items, User
 from sqlalchemy.orm import Session
 from database import get_db
+from jose import jwt
 
 router = APIRouter(include_in_schema=False)
 
@@ -52,5 +53,9 @@ async def create_item(request: Request):
             return templates.TemplateResponse(
                 "create_item_page.html", {"request": request, "errors": errors}
             )
+        else:
+            scheme,_, param = token.partition(" ")
+            payload = jwt.decode(param)
+
     except Exception as e:
         print(e)
