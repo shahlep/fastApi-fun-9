@@ -6,6 +6,7 @@ from database import get_db
 from jose import jwt
 from config.settings import Settings
 from fastapi.security.utils import get_authorization_scheme_param
+from datetime import datetime
 
 router = APIRouter(include_in_schema=False)
 
@@ -68,7 +69,10 @@ async def create_item(request: Request,db:Session=Depends(get_db)):
                     "create_item_page.html", {"request": request, "errors": errors}
                 )
             else:
-                pass
+                item = Items(title=title,description=description,date_posted=datetime.now().date(),owner_id=user.id)
+                db.add(item)
+                db.commit()
+                db.refresh(item)
     except Exception:
         errors.append("Something went wrong!")
         return templates.TemplateResponse(
