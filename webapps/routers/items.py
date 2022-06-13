@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends,responses,status
 from fastapi.templating import Jinja2Templates
 from models import Items, User
 from sqlalchemy.orm import Session
@@ -73,6 +73,7 @@ async def create_item(request: Request,db:Session=Depends(get_db)):
                 db.add(item)
                 db.commit()
                 db.refresh(item)
+                return responses.RedirectResponse(f"/detail/{item.id}",status_code=status.HTTP_302_FOUND)
     except Exception:
         errors.append("Something went wrong!")
         return templates.TemplateResponse(
