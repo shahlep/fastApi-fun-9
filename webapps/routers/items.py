@@ -81,7 +81,7 @@ async def create_item(request: Request, db: Session = Depends(get_db)):
                 db.commit()
                 db.refresh(item)
                 return responses.RedirectResponse(
-                    f"/detail/{item.id}", status_code=status.HTTP_302_FOUND
+                    f"/details/{item.id}", status_code=status.HTTP_302_FOUND
                 )
     except Exception:
         errors.append("Something went wrong!")
