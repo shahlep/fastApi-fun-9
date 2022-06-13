@@ -36,3 +36,6 @@ async def create_item(request:Request):
     form = await request.form()
     title = form.get("title")
     description = form.get("description")
+    errors = []
+    if not title or len(title) < 2:
+        errors.append("Title should have at least 2 characters!")
