@@ -15,10 +15,30 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/")
 def items_home(request: Request, db: Session = Depends(get_db), msg: str = None):
-    items = db.query(Items).all()
-    return templates.TemplateResponse(
-        "items_home_page.html", {"request": request, "items": items, "msg": msg}
-    )
+    errors = []
+    try:
+        token = request.cookies.get("access_token")
+        if token is None:
+            items = db.query(Items).all()
+            return templates.TemplateResponse(
+                "items_home_page.html", {"request": request, "items": items, "msg": msg}
+            )
+        else:
+            scheme, param = get_authorization_scheme_param(token)
+            payload = jwt.decode(
+                param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
+            )
+            email = payload.get("sub")
+            user = db.query(User).filter(User.email == email).first()
+            items = db.query(Items).filter(Items.owner_id == user.id).all()
+            return templates.TemplateResponse(
+                "items_home_page.html", {"request": request, "items": items, "msg": msg}
+            )
+    except Exception:
+        errors.append("Something went wrong")
+        return templates.TemplateResponse(
+            "items_home_page.html", {"request": request, "items": items, "errors": errors}
+        )
 
 
 @router.get("/details/{id}")
