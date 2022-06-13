@@ -32,7 +32,7 @@ def create_item(request: Request):
 
 
 @router.post("/create-an-item")
-async def create_item(request:Request):
+async def create_item(request: Request):
     form = await request.form()
     title = form.get("title")
     description = form.get("description")
@@ -42,4 +42,6 @@ async def create_item(request:Request):
     if not description or len(description) < 10:
         errors.append("Description should have at least 10 characters!")
     if len(errors) > 0:
-        return templates.TemplateResponse("create_item_page.html", {"request": request,"errors":errors})
+        return templates.TemplateResponse(
+            "create_item_page.html", {"request": request, "errors": errors}
+        )
