@@ -45,3 +45,9 @@ async def create_item(request: Request):
         return templates.TemplateResponse(
             "create_item_page.html", {"request": request, "errors": errors}
         )
+    token = request.cookies.get("access_token")
+    if token is None:
+        errors.append("Please login first to create an item")
+        return templates.TemplateResponse(
+            "create_item_page.html", {"request": request, "errors": errors}
+        )
