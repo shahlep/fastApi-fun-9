@@ -56,7 +56,7 @@ async def create_item(request: Request):
                 "create_item_page.html", {"request": request, "errors": errors}
             )
         else:
-            scheme,param = get_authorization_scheme_param(token)
+            scheme, param = get_authorization_scheme_param(token)
             payload = jwt.decode(
                 param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
             )
