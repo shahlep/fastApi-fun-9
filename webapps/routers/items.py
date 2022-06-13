@@ -59,6 +59,8 @@ async def create_item(request: Request):
             payload = jwt.decode(
                 param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
             )
+            print(payload)
+    except Exception:
+        errors.append("Something went wrong!")
+        return templates.TemplateResponse("create_item_page.html", {"request": request,"errors":errors})
 
-    except Exception as e:
-        print(e)
