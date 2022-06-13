@@ -62,5 +62,6 @@ async def create_item(request: Request):
             print(payload)
     except Exception:
         errors.append("Something went wrong!")
-        return templates.TemplateResponse("create_item_page.html", {"request": request,"errors":errors})
-
+        return templates.TemplateResponse(
+            "create_item_page.html", {"request": request, "errors": errors}
+        )
