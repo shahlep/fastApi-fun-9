@@ -39,3 +39,5 @@ async def create_item(request:Request):
     errors = []
     if not title or len(title) < 2:
         errors.append("Title should have at least 2 characters!")
+    if not description or len(description) < 10:
+        errors.append("Description should have at least 10 characters!")
