@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from jose import jwt
 from config.settings import Settings
+from fastapi.security.utils import get_authorization_scheme_param
 
 router = APIRouter(include_in_schema=False)
 
@@ -55,7 +56,7 @@ async def create_item(request: Request):
                 "create_item_page.html", {"request": request, "errors": errors}
             )
         else:
-            scheme, _, param = token.partition(" ")
+            scheme,param = get_authorization_scheme_param(token)
             payload = jwt.decode(
                 param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
             )
