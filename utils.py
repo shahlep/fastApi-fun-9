@@ -14,7 +14,7 @@ we store our token in cookies
 """
 
 
-class OAuth2PasswordBearer(OAuth2):
+class OAuth2PasswordBearerWithCookies(OAuth2):
     def __init__(
         self,
         tokenUrl: str,
