@@ -27,10 +27,11 @@
                 </tr>
             </thead>
             <tbody>
+                {% for item in items %}
                 <tr>
                     <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.description }}</td>
                      <td>Delete</td>
                 </tr>
             </tbody>
