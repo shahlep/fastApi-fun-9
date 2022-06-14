@@ -129,10 +129,9 @@ def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
             email = payload.get("sub")
             user = db.query(User).filter(User.email == email).first()
             items = db.query(Items).filter(Items.owner_id == user.id).all()
-            msg = "Item successfully deleted"
             return templates.TemplateResponse(
                 "show_item_to_delete_page.html",
-                {"request": request, "items": items, "msg": msg},
+                {"request": request, "items": items},
             )
         except Exception:
             errors.append("Something went wrong!")
