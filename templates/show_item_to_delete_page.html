@@ -7,6 +7,11 @@
 {% block content %}
     <div class="container">
         <h1>Delete an item</h1>
+        {% for errorr in errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ errorr }}
+            </div>
+        {% endfor %}
         {% if msg %}
             <div class="alert alert-success" role="alert">
                 {{ msg }}
