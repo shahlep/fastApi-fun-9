@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 from fastapi.exceptions import HTTPException
-from fastapi.openapi.models import OAuth2
+from fastapi.security import OAuth2
 from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel
 from fastapi.security.utils import get_authorization_scheme_param
 from starlette.requests import Request
