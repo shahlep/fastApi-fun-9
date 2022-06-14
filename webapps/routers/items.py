@@ -123,16 +123,20 @@ def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
     else:
         try:
             scheme, param = get_authorization_scheme_param(token)
-            payload = jwt.decode(param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM)
+            payload = jwt.decode(
+                param, Settings.SECRET_KEY, algorithms=Settings.ALGORITHM
+            )
             email = payload.get("sub")
             user = db.query(User).filter(User.email == email).first()
             items = db.query(Items).filter(Items.owner_id == user.id).all()
             msg = "Item successfully deleted"
             return templates.TemplateResponse(
                 "show_item_to_delete_page.html",
-                    {"request": request, "items": items, "msg": msg})
+                {"request": request, "items": items, "msg": msg},
+            )
         except Exception:
             errors.append("Something went wrong!")
         return templates.TemplateResponse(
             "show_item_to_delete_page.html",
-            {"request": request, "items": items, "errors": errors})
+            {"request": request, "items": items, "errors": errors},
+        )
