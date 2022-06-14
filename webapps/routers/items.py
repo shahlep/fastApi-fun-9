@@ -111,7 +111,7 @@ async def create_item(request: Request, db: Session = Depends(get_db)):
         )
 
 
-@router.get("/delete-item")
+@router.get("/delete-an-item")
 def show_items_to_delete(request: Request):
     return templates.TemplateResponse(
         "show_item_to_delete_page.html", {"request": request}
