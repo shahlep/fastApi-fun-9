@@ -32,7 +32,7 @@
                     <th scope="row">{{ loop.index }}</th>
                     <td>{{ item.title }}</td>
                     <td>{{ item.description }}</td>
-                     <td><button type="button" class="btn btn-danger" onclick="delete_item({{ item.id }})">Delete</button></td>
+                     <td><button type="button" class="btn btn-danger" onclick="delete_item({{item.id}})">Delete</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -40,7 +40,7 @@
     </div>
 {% endblock %}
 
-{% block script %}
+{% block scripts %}
     <script>
         function delete_item(id)
         {
