@@ -87,7 +87,7 @@ def update_item_by_id(
         return {"Message": f"You are not autorized to update this item!"}
 
 
-@router.delete("/items/{id}", tags=["Items"])
+@router.delete("/items/delete/{id}", tags=["Items"])
 def delete_item_by_id(
     id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):

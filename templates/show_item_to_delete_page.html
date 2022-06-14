@@ -44,7 +44,7 @@
     <script>
         function delete_item(id)
         {
-            console.log(id)
+            fetch("/items/"+id,{method:"DELETE"})
         }
     </script>
 {% endblock %}
