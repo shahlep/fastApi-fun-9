@@ -7,6 +7,7 @@ from starlette.requests import Request
 from starlette.status import HTTP_401_UNAUTHORIZED
 
 """ 
+From
 https://github.com/tiangolo/fastapi/blob/master/fastapi/security/oauth2.py
 copied the method and change the request point to cookies from header as
 we store our token in cookies
@@ -15,12 +16,12 @@ we store our token in cookies
 
 class OAuth2PasswordBearer(OAuth2):
     def __init__(
-            self,
-            tokenUrl: str,
-            scheme_name: Optional[str] = None,
-            scopes: Optional[Dict[str, str]] = None,
-            description: Optional[str] = None,
-            auto_error: bool = True,
+        self,
+        tokenUrl: str,
+        scheme_name: Optional[str] = None,
+        scopes: Optional[Dict[str, str]] = None,
+        description: Optional[str] = None,
+        auto_error: bool = True,
     ):
         if not scopes:
             scopes = {}
