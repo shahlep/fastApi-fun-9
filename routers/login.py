@@ -6,9 +6,10 @@ from models import User
 from hashing import Hash
 from jose import jwt
 from config.settings import Settings
+from utils import OAuth2PasswordBearerWithCookies
 
 
-oauth_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
+oauth_scheme = OAuth2PasswordBearerWithCookies(tokenUrl="/login/token")
 
 router = APIRouter()
 
