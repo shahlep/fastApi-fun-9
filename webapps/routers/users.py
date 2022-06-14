@@ -33,7 +33,7 @@ async def register(request: Request, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(user)
         return responses.RedirectResponse(
-            "/?msg=Successfully Registered", status_code=status.HTTP_302_FOUND
+            "/login?msg=Successfully Registered", status_code=status.HTTP_302_FOUND
         )
     except IntegrityError:
         errors.append("Email already exists")
