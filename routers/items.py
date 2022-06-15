@@ -106,4 +106,7 @@ def delete_item_by_id(
 def autocomplete(term: Optional[str], db: Session = Depends(get_db)):
     items = db.query(Items).filter(Items.title.contains(term)).all()
     suggestions = []
+    for item in items:
+        suggestions.append(item)
+    return suggestions
 
