@@ -142,5 +142,7 @@ def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
 
 
 @router.get("/search")
-def search_item(request: Request):
-    pass
+def search_item(request: Request, db: Session = Depends(get_db), msg: str = None):
+    return templates.TemplateResponse(
+        "items_home_page.html", {"request": request, "msg": msg}
+    )
