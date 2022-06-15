@@ -7,6 +7,7 @@ from jose import jwt
 from config.settings import Settings
 from fastapi.security.utils import get_authorization_scheme_param
 from datetime import datetime
+from typing import Optional
 
 router = APIRouter(include_in_schema=False)
 
@@ -142,7 +143,7 @@ def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
 
 
 @router.get("/search")
-def search_item(request: Request, db: Session = Depends(get_db), msg: str = None):
+def search_item(request: Request, qurey: Optional[str], db: Session = Depends(get_db), msg: str = None):
     return templates.TemplateResponse(
         "items_home_page.html", {"request": request, "msg": msg}
     )
