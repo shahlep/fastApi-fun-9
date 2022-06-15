@@ -7,6 +7,9 @@
 {% block content %}
     <div class="container">
         <h1>Delete an item</h1>
+        <div id="result">
+
+        </div>
         {% for errorr in errors %}
             <div class="alert alert-danger" role="alert">
                 {{ errorr }}
@@ -46,7 +49,7 @@
         {
             fetch("/items/delete/"+id,{method:"DELETE"})
                 .then(response => response.json())
-                .then(data => data.Message)
+                .then(data => document.getElementById("result").innerHTML =data.Message)
 
         }
     </script>
