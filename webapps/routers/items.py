@@ -143,7 +143,8 @@ def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
 
 
 @router.get("/search")
-def search_item(request: Request, qurey: Optional[str], db: Session = Depends(get_db), msg: str = None):
+def search_item(request: Request, query: Optional[str], db: Session = Depends(get_db)):
+    items = db.query(Items).filter(Items.title.contains(query)).all()
     return templates.TemplateResponse(
-        "items_home_page.html", {"request": request, "msg": msg}
+        "items_home_page.html", {"request": request, "items": items}
     )
