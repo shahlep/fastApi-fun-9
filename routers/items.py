@@ -4,7 +4,7 @@ from models import Items, User
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime
-from typing import List
+from typing import List,Optional
 from fastapi.encoders import jsonable_encoder
 from .login import oauth_scheme
 from jose import jwt
@@ -103,5 +103,5 @@ def delete_item_by_id(
         return {"Message": f"You are not authorized!"}
 
 
-def autocomplete():
+def autocomplete(term:Optional[str],db:Session=Depends(get_db)):
     pass
