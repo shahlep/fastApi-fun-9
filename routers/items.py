@@ -38,7 +38,7 @@ def get_user_from_token(token, db):
 
 @router.post("/items", tags=["Items"], response_model=ShowItem)
 def create_item(
-    item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+        item: ItemCreate, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
     user = get_user_from_token(token, db)
     owner_id = user.id
@@ -68,10 +68,10 @@ def get_item_by_id(id: int, db: Session = Depends(get_db)):
 
 @router.put("/items/update/{id}", tags=["Items"])
 def update_item_by_id(
-    id: int,
-    item: ItemCreate,
-    db: Session = Depends(get_db),
-    token: str = Depends(oauth_scheme),
+        id: int,
+        item: ItemCreate,
+        db: Session = Depends(get_db),
+        token: str = Depends(oauth_scheme),
 ):
     user = get_user_from_token(token, db)
     existing_item = db.query(Items).filter(Items.id == id)
@@ -89,7 +89,7 @@ def update_item_by_id(
 
 @router.delete("/items/delete/{id}", tags=["Items"])
 def delete_item_by_id(
-    id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+        id: int, db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
     user = get_user_from_token(token, db)
     existing_item = db.query(Items).filter(Items.id == id)
@@ -101,3 +101,7 @@ def delete_item_by_id(
         return {"Message": f"Item with id {id} successfully deleted!"}
     else:
         return {"Message": f"You are not authorized!"}
+
+
+def autocomplete():
+    pass
