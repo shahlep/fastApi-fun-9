@@ -103,6 +103,4 @@ def delete_item_by_id(
         return {"Message": f"You are not authorized!"}
 
 
-@router.get("/search")
-def search_item():
-    pass
+

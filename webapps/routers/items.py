@@ -139,3 +139,8 @@ def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
             "show_item_to_delete_page.html",
             {"request": request, "items": items, "errors": errors},
         )
+
+
+@router.get("/search")
+def search_item(request: Request):
+    pass
