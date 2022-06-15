@@ -46,7 +46,8 @@
         {
             fetch("/items/delete/"+id,{method:"DELETE"})
                 .then(response => response.json())
-                .then(data => console.log(data.message))
+                .then(data => console.log(data.Message))
+
         }
     </script>
 {% endblock %}
