@@ -45,6 +45,7 @@
         function delete_item(id)
         {
             fetch("/items/delete/"+id,{method:"DELETE"})
+                .then(response => console.log(response.json()))
         }
     </script>
 {% endblock %}
