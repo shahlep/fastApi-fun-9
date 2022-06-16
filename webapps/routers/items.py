@@ -45,7 +45,10 @@ def items_home(request: Request, db: Session = Depends(get_db), msg: str = None)
 
 @router.get("/update-an-item/{id}")
 def update_an_item(request: Request, id: int, db: Session = Depends(get_db)):
-    pass
+    return templates.TemplateResponse(
+        "update_item_page.html",
+        {"request": request},
+    )
 
 
 @router.get("/details/{id}")
