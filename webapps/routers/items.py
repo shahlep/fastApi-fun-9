@@ -43,6 +43,11 @@ def items_home(request: Request, db: Session = Depends(get_db), msg: str = None)
         )
 
 
+@router.get("/update-an-item/{id}")
+def update_an_item():
+    pass
+
+
 @router.get("/details/{id}")
 def item_details(request: Request, id: int, db: Session = Depends(get_db)):
     item = db.query(Items).filter(Items.id == id).first()
