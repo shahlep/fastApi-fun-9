@@ -119,7 +119,7 @@ def show_items_to_update_and_delete(request: Request, db: Session = Depends(get_
     if token is None:
         errors.append("You are not logged in")
         return templates.TemplateResponse(
-            "show_item_to_delete_page.html", {"request": request, "errors": errors}
+            "show_item_to_update_delete_page.html", {"request": request, "errors": errors}
         )
     else:
         try:
