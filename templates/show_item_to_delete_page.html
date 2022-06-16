@@ -20,7 +20,7 @@
                 {{ msg }}
             </div>
         {% endif %}
-        <table class="table table-striped" id="table">
+        <table class="table table-striped" id="datatable">
             <thead>
                 <tr>
                     <th scope="col">S No.</th>
@@ -44,6 +44,11 @@
 {% endblock %}
 
 {% block scripts %}
+    <script>
+    $(document).ready( function () {
+    $('#myTable').DataTable();
+    });
+    </script>
     <script>
         function delete_item(id)
         {
