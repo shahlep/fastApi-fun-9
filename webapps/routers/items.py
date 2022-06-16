@@ -112,8 +112,8 @@ async def create_item(request: Request, db: Session = Depends(get_db)):
         )
 
 
-@router.get("/delete-an-item")
-def show_items_to_delete(request: Request, db: Session = Depends(get_db)):
+@router.get("/update-delete-an-item")
+def show_items_to_update_and_delete(request: Request, db: Session = Depends(get_db)):
     errors = []
     token = request.cookies.get("access_token")
     if token is None:
