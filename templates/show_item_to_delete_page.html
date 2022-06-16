@@ -55,6 +55,12 @@
             fetch("/items/delete/"+id,{method:"DELETE"})
                 .then(response => response.json())
                 .then(data => document.getElementById("result").innerHTML =data.Message)
+                .then()
+			    .then(setTimeout
+                (function()
+				{
+				location.reload()
+				}, 1000))
 
         }
     </script>
