@@ -131,13 +131,13 @@ def show_items_to_update_and_delete(request: Request, db: Session = Depends(get_
             user = db.query(User).filter(User.email == email).first()
             items = db.query(Items).filter(Items.owner_id == user.id).all()
             return templates.TemplateResponse(
-                "show_item_to_delete_page.html",
+                "show_item_to_update_delete_page.html",
                 {"request": request, "items": items},
             )
         except Exception:
             errors.append("Something went wrong!")
         return templates.TemplateResponse(
-            "show_item_to_delete_page.html",
+            "show_item_to_update_delete_page.html",
             {"request": request, "items": items, "errors": errors},
         )
 
