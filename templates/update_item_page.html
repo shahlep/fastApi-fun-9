@@ -18,11 +18,11 @@
         <form>
             <div class="mb-3">
                 <label for="title" class="form-label">Item Title</label>
-                <input type="text" value="{{ item.title }}" required class="form-control" name="title" placeholder="Enter Item Title">
+                <input type="text" value="{{ item.title }}" required class="form-control" id="title" name="title" placeholder="Enter Item Title">
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Item Description</label>
-                <textarea class="form-control" required name="description" placeholder="Enter Item Description">{{ item.description }}</textarea>
+                <textarea class="form-control" required name="description" id="description" placeholder="Enter Item Description">{{ item.description }}</textarea>
             </div>
             <div class="form-text">Enter full item description in details</div>
         </form>
@@ -34,8 +34,12 @@
     <script>
         function update_item(id)
         {
-            fetch("/items/update/"+id,{Method:"PUT"})
+            var data = {}
+            data["title"]= document.getElementById("title")
+            data["description"] = document.getElementById("description")
+            fetch("/items/update/"+id,{Method:"PUT", body:data})
                 .then(response => response.json)
+
         }
     </script>
 {% endblock %}
