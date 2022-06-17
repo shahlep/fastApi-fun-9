@@ -17,17 +17,14 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/logout")
-def user_logged_out(db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
-                    ):
+def user_logged_out(db: Session = Depends(get_db), token: str = Depends(oauth_scheme)):
     user = get_token_after_authentication(db, token)
     if user is None:
-        return responses.RedirectResponse(
-            "/?msg=You are not logged in!")
+        return responses.RedirectResponse("/?msg=You are not logged in!")
     else:
         # jwt_token = jwt.encode(user.email, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM)
         response.delete_cookie(key="access_token")
-        return responses.RedirectResponse(
-            "/?msg=Successfully Logged out!")
+        return responses.RedirectResponse("/?msg=Successfully Logged out!")
 
 
 @router.get("/login")
