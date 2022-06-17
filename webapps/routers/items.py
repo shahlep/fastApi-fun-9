@@ -48,7 +48,7 @@ def update_an_item(request: Request, id: int, db: Session = Depends(get_db)):
     item = db.query(Items).filter(Items.id == id).first()
     return templates.TemplateResponse(
         "update_item_page.html",
-        {"request": request,"item":item},
+        {"request": request, "item": item},
     )
 
 
