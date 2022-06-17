@@ -7,6 +7,9 @@
 {% block content %}
     <div class="container">
         <h3 class="text-center">Update an Item</h3>
+        <div id="result">
+
+        </div>
         {% for error in errors %}
             <div class="alert alert-danger" role="alert">
                 {{ error }}
@@ -31,7 +34,8 @@
     <script>
         function update_item(id)
         {
-
+            fetch("/items/update/"+id,{Method:"PUT"})
+                .then(response => response.json)
         }
     </script>
 {% endblock %}
