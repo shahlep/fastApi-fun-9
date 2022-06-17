@@ -35,11 +35,9 @@
         function update_item(id)
         {
             var data = {}
-            data["title"]= document.getElementById("title")
-            data["description"] = document.getElementById("description")
-            fetch("/items/update/"+id,{Method:"PUT", body:data})
-                .then(response => response.json)
-
+            data["title"]= document.getElementById("title").value
+            data["description"] = document.getElementById("description").value
+            fetch("/items/update/"+id,{method:"PUT", body:json.stringify(data)})
         }
     </script>
 {% endblock %}
