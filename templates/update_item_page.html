@@ -37,7 +37,7 @@
             var data = {}
             data["title"]= document.getElementById("title").value
             data["description"] = document.getElementById("description").value
-            fetch("/items/update/"+id,{method:"PUT", body:json.stringify(data)})
+            fetch("/items/update/"+id,{method:"PUT", body:JSON.stringify(data)})
         }
     </script>
 {% endblock %}
