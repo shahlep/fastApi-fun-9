@@ -6,10 +6,28 @@ from models import User
 from hashing import Hash
 from jose import jwt
 from config.settings import Settings
+from routers.login import get_token_after_authentication
+from utils import OAuth2PasswordBearerWithCookies
+
+oauth_scheme = OAuth2PasswordBearerWithCookies(tokenUrl="/login/token")
 
 router = APIRouter(include_in_schema=False)
 
 templates = Jinja2Templates(directory="templates")
+
+
+@router.get("/logout")
+def user_logged_out(db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
+                    ):
+    user = get_token_after_authentication(db, token)
+    if user is None:
+        return responses.RedirectResponse(
+            "/?msg=You are not logged in!")
+    else:
+        # jwt_token = jwt.encode(user.email, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM)
+        response.delete_cookie(key="access_token")
+        return responses.RedirectResponse(
+            "/?msg=Successfully Logged out!")
 
 
 @router.get("/login")
