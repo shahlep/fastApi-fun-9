@@ -15,7 +15,7 @@
         <form method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Item Title</label>
-                <input type="text" required class="form-control" name="title" placeholder="Enter Item Title">
+                <input type="text" value="{{ item.title }}" required class="form-control" name="title" placeholder="Enter Item Title">
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Item Description</label>
