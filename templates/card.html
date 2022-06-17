@@ -1,7 +1,7 @@
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
+<div class="card" style="width: 18rem; height: 10rem">
+  <div class="card-body border rounded border-warning" >
     <h5 class="card-title">{{ card_item.title }}</h5>
-    <p class="card-text">{{ card_item.description[:50] }}</p>
+    <p class="card-text">{{ card_item.description[:20] }}</p>
     <a href="/details/{{ card_item.id }}" class="btn btn-primary">Read more</a>
   </div>
 </div>
