@@ -17,7 +17,11 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/logout")
-def user_logged_out(response:Response,db: Session = Depends(get_db), token: str = Depends(oauth_scheme)):
+def user_logged_out(
+    response: Response,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth_scheme),
+):
     user = get_token_after_authentication(db, token)
     if user is None:
         return responses.RedirectResponse("/?msg=You are not logged in!")
